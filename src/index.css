@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Professional Mode */
+  :root {
+    --background: 40 20% 98%;
+    --foreground: 240 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+
+    --primary: 222 47% 11%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 40 15% 94%;
+    --secondary-foreground: 240 10% 10%;
+
+    --muted: 40 15% 94%;
+    --muted-foreground: 240 5% 46%;
+
+    --accent: 222 47% 11%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 40 10% 88%;
+    --input: 40 10% 88%;
+    --ring: 222 47% 11%;
+
+    --radius: 0.5rem;
+
+    /* Custom tokens for Professional mode */
+    --neon-green: 142 71% 45%;
+    --neon-purple: 270 95% 75%;
+    --grid-color: 0 0% 90%;
+    
+    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  /* Developer Mode */
+  .developer {
+    --background: 0 0% 2%;
+    --foreground: 142 71% 45%;
+
+    --card: 0 0% 5%;
+    --card-foreground: 142 71% 45%;
+
+    --popover: 0 0% 5%;
+    --popover-foreground: 142 71% 45%;
+
+    --primary: 142 71% 45%;
+    --primary-foreground: 0 0% 2%;
+
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 142 71% 45%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 142 50% 35%;
+
+    --accent: 270 95% 75%;
+    --accent-foreground: 0 0% 2%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 2%;
+
+    --border: 142 50% 20%;
+    --input: 0 0% 12%;
+    --ring: 142 71% 45%;
+
+    --grid-color: 142 71% 15%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
+
+  .developer body,
+  .developer {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer components {
+  /* CRT Scanline Overlay for Developer Mode */
+  .crt-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      hsla(0, 0%, 0%, 0.03) 2px,
+      hsla(0, 0%, 0%, 0.03) 4px
+    );
+  }
+
+  /* Animated Grid Background */
+  .grid-background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-size: 50px 50px;
+    background-image:
+      linear-gradient(to right, hsl(var(--grid-color)) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--grid-color)) 1px, transparent 1px);
+    animation: grid-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes grid-pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.6; }
+  }
+
+  /* Glitch Effect */
+  @keyframes glitch {
+    0% {
+      transform: translate(0);
+      filter: hue-rotate(0deg);
+    }
+    10% {
+      transform: translate(-5px, 2px);
+      filter: hue-rotate(90deg);
+    }
+    20% {
+      transform: translate(5px, -2px);
+      filter: hue-rotate(180deg);
+    }
+    30% {
+      transform: translate(-3px, 3px);
+      filter: hue-rotate(270deg);
+    }
+    40% {
+      transform: translate(3px, -3px);
+      filter: hue-rotate(0deg);
+    }
+    50% {
+      transform: translate(0);
+      filter: hue-rotate(0deg);
+    }
+    100% {
+      transform: translate(0);
+      filter: hue-rotate(0deg);
+    }
+  }
+
+  .glitch-effect {
+    animation: glitch 0.5s ease-in-out;
+  }
+
+  /* Screen Flash Transition */
+  @keyframes screen-flash {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    20% { opacity: 0; }
+    30% { opacity: 0.8; }
+    40% { opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { opacity: 0; }
+  }
+
+  .screen-flash {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: linear-gradient(
+      45deg,
+      hsl(142 71% 45% / 0.3),
+      hsl(270 95% 75% / 0.3)
+    );
+    animation: screen-flash 0.5s ease-out forwards;
+    pointer-events: none;
+  }
+
+  /* Terminal cursor blink */
+  @keyframes cursor-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .cursor-blink {
+    animation: cursor-blink 1s step-end infinite;
+  }
+
+  /* Retro card glow */
+  .retro-glow {
+    box-shadow: 
+      0 0 5px hsl(var(--primary)),
+      0 0 10px hsl(var(--primary) / 0.5),
+      0 0 20px hsl(var(--primary) / 0.3);
+  }
+
+  /* Hover glitch for cards */
+  @keyframes card-glitch {
+    0%, 100% {
+      clip-path: inset(0 0 0 0);
+      transform: translate(0);
+    }
+    20% {
+      clip-path: inset(20% 0 60% 0);
+      transform: translate(-2px, 2px);
+    }
+    40% {
+      clip-path: inset(40% 0 40% 0);
+      transform: translate(2px, -2px);
+    }
+    60% {
+      clip-path: inset(60% 0 20% 0);
+      transform: translate(-1px, 1px);
+    }
+    80% {
+      clip-path: inset(80% 0 0% 0);
+      transform: translate(1px, -1px);
+    }
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+
+  .border-glow {
+    box-shadow: 0 0 10px hsl(var(--primary) / 0.5);
+  }
+}
