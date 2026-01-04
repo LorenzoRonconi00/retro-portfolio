@@ -3,7 +3,7 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useRef } from 'react';
 import { containerVariants, itemVariants, scaleVariants } from '@/lib/animations';
 import { useState } from 'react';
-import { TechCard } from '../ui/Techcard';
+import { TechCard } from '../ui/techcard';
 import { CategoryTabs } from '../ui/category-tabs';
 import {
   Code2, Globe, Database, Wrench,
