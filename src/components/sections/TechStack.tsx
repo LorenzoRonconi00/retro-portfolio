@@ -2,28 +2,64 @@ import { motion, useInView } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useRef } from 'react';
 import { containerVariants, itemVariants, scaleVariants } from '@/lib/animations';
+import { useState } from 'react';
+import { TechCard } from '../ui/Techcard';
+import { CategoryTabs } from '../ui/category-tabs';
+import {
+  Code2, Globe, Database, Wrench,
+  Box, Smartphone, Monitor
+} from 'lucide-react';
 
 const techCategories = [
   {
     name: 'Frontend',
     devName: 'client',
-    techs: ['React', 'Next.js', 'Angular', 'Tailwind', 'Three.js', 'Motion.dev'],
+    techs: [
+      { name: 'React', level: 90, years: 3, icon: Code2 },
+      { name: 'Next.js', level: 85, years: 3, icon: Globe },
+      { name: 'Angular', level: 90, years: 3, icon: Code2 },
+      { name: 'Tailwind', level: 95, years: 3, icon: Monitor },
+      { name: 'Three.js', level: 60, years: 1, icon: Box },
+      { name: 'Motion.dev', level: 80, years: 2, icon: Code2 },
+    ],
   },
   {
     name: 'Backend',
     devName: 'server',
-    techs: ['Python', 'Java', 'Node.js', 'Express', 'C#'],
+    techs: [
+      { name: 'Python', level: 85, years: 4, icon: Code2 },
+      { name: 'Java', level: 75, years: 4, icon: Code2 },
+      { name: 'Node.js', level: 80, years: 2, icon: Globe },
+      { name: 'Express', level: 75, years: 2, icon: Globe },
+      { name: 'C#', level: 70, years: 5, icon: Code2 },
+    ],
   },
   {
     name: 'Database',
     devName: 'data',
-    techs: ['Relational DB', 'NoSQL DB'],
+    techs: [
+      { name: 'PostgreSQL', level: 80, years: 3, icon: Database },
+      { name: 'MongoDB', level: 85, years: 3, icon: Database },
+      { name: 'MySQL', level: 70, years: 3, icon: Database },
+      { name: 'Firebase', level: 80, years: 2, icon: Database },
+      { name: 'Supabase', level: 85, years: 3, icon: Database },
+    ],
   },
   {
     name: 'Other',
     devName: 'tools',
-    techs: ['Unity', 'Flutter/Dart', 'Electron'],
+    techs: [
+      { name: 'Unity', level: 85, years: 6, icon: Box },
+      { name: 'Flutter/Dart', level: 60, years: 1, icon: Smartphone },
+      { name: 'Electron', level: 80, years: 1, icon: Monitor },
+      { name: 'Prisma', level: 70, years: 2, icon: Database },
+    ],
   },
+];
+
+const learningTechs = [
+  { name: 'Flutter/Dart', level: 60, years: 1, icon: Smartphone, isLearning: true },
+  { name: 'Three.js', level: 60, years: 1, icon: Box, isLearning: true },
 ];
 
 export function TechStack() {
@@ -31,11 +67,13 @@ export function TechStack() {
   const isDeveloper = mode === 'developer';
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [activeCategory, setActiveCategory] = useState(techCategories[0].name);
+  const activeCategoryData = techCategories.find(cat => cat.name === activeCategory);
 
   return (
     <section ref={ref} className="py-24 px-6" id="tech">
       <motion.div
-        className="max-w-4xl mx-auto"
+        className="max-w-6xl mx-auto"
         variants={containerVariants}
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
@@ -53,53 +91,84 @@ export function TechStack() {
           )}
         </motion.div>
 
-        <div className="space-y-8">
-          {techCategories.map((category, categoryIndex) => (
-            <motion.div key={category.name} variants={itemVariants}>
-              <div className="mb-4">
-                {isDeveloper ? (
-                  <span className="font-mono text-sm">
-                    <span className="text-muted-foreground ml-4">{category.devName}:</span>{' '}
-                    <span className="text-accent">[</span>
-                  </span>
-                ) : (
-                  <h3 className="text-lg font-medium text-muted-foreground">{category.name}</h3>
-                )}
-              </div>
-              
-              <motion.div 
-                className={`flex flex-wrap gap-3 ${isDeveloper ? 'ml-8' : ''}`}
-                variants={containerVariants}
-              >
-                {category.techs.map((tech, index) => (
-                  <motion.span
-                    key={tech}
-                    className={`
-                      px-4 py-2 rounded-md text-sm transition-all cursor-default
-                      ${isDeveloper 
-                        ? 'bg-card border border-primary/40 font-mono hover:border-primary hover:retro-glow' 
-                        : 'bg-secondary hover:bg-accent hover:text-accent-foreground'
-                      }
-                    `}
-                    variants={scaleVariants}
-                    whileHover={{ 
-                      scale: 1.05,
-                      transition: { duration: 0.2 }
-                    }}
-                  >
-                    {isDeveloper ? `"${tech}"${index < category.techs.length - 1 ? ',' : ''}` : tech}
-                  </motion.span>
-                ))}
-              </motion.div>
+        <motion.div variants={itemVariants}>
+          <CategoryTabs
+            categories={techCategories.map(cat => isDeveloper ? cat.devName : cat.name)}
+            activeCategory={isDeveloper ? activeCategoryData?.devName || '' : activeCategory}
+            onCategoryChange={(cat) => {
+              const category = techCategories.find(c =>
+                isDeveloper ? c.devName === cat : c.name === cat
+              );
+              if (category) setActiveCategory(category.name);
+            }}
+            isDeveloper={isDeveloper}
+          />
+        </motion.div>
 
-              {isDeveloper && (
-                <span className="font-mono text-sm text-accent ml-4">
-                  ]{categoryIndex < techCategories.length - 1 ? ',' : ''}
-                </span>
-              )}
+        <motion.div
+          key={activeCategory}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          {activeCategoryData?.techs.map((tech, index) => (
+            <motion.div
+              key={tech.name}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: index * 0.05 }}
+            >
+              <TechCard
+                name={tech.name}
+                level={tech.level}
+                years={tech.years}
+                icon={tech.icon}
+                isDeveloper={isDeveloper}
+              />
             </motion.div>
           ))}
-        </div>
+        </motion.div>
+
+        {learningTechs.length > 0 && (
+          <motion.div className="mt-12" variants={itemVariants}>
+            <div className="mb-4">
+              {isDeveloper ? (
+                <span className="font-mono text-sm text-muted-foreground">
+                  <span className="text-primary">learning</span>
+                  <span className="text-accent">: [</span>
+                </span>
+              ) : (
+                <h3 className="text-xl font-medium text-muted-foreground flex items-center gap-2">
+                  Currently Learning
+                </h3>
+              )}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {learningTechs.map((tech, index) => (
+                <motion.div
+                  key={tech.name}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: index * 0.05 }}
+                >
+                  <TechCard
+                    name={tech.name}
+                    level={tech.level}
+                    years={tech.years}
+                    icon={tech.icon}
+                    isDeveloper={isDeveloper}
+                    isLearning={true}
+                  />
+                </motion.div>
+              ))}
+            </div>
+            {isDeveloper && (
+              <span className="font-mono text-sm text-accent">]</span>
+            )}
+          </motion.div>
+        )}
 
         {isDeveloper && (
           <motion.div className="mt-8 font-mono text-accent" variants={itemVariants}>
