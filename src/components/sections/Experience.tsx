@@ -3,25 +3,41 @@ import { useTheme } from '@/contexts/ThemeContext';
 import { useRef } from 'react';
 import { Briefcase } from 'lucide-react';
 import { containerVariants, itemVariantsX } from '@/lib/animations';
+import { CompanyLogo } from '../ui/company-logo';
+import { ExperienceBadge } from '../ui/experience-badge';
+import { calculateDuration } from '@/lib/experience-utils';
+import { ExternalLink } from 'lucide-react';
 
 const experiences = [
   {
     company: 'Osmosit',
     role: 'Full-stack Software Engineer',
     period: '2023 - Present',
+    startDate: '2023-10',
+    endDate: 'present',
     description: 'Web app development using React, Angular, TypeScript, PostgreSQL, Java, and Python.',
+    techs: ['React', 'Angular', 'TypeScript', 'PostgreSQL', 'Java', 'Python'],
+    link: 'https://www.osmosit.com/',
   },
   {
     company: 'Pucciufficio Srl',
     role: 'Back-end Developer',
     period: '2023',
+    startDate: '2023-07',
+    endDate: '2023-10',
     description: 'IT solutions with eSolver, SQL, and C#.',
+    techs: ['SQL', 'C#', 'eSolver'],
+    link: 'https://www.pucciufficio.com/',
   },
   {
     company: 'Vigamus Academy',
     role: 'C# Unity Developer',
     period: '2020 - 2021',
+    startDate: '2020-10',
+    endDate: '2021-04',
     description: "Developed scenes for the video game 'Dracula', focusing on math and physics programming.",
+    techs: ['Unity', 'C#'],
+    link: 'https://www.vigamusacademy.com/',
   },
 ];
 
@@ -52,73 +68,132 @@ export function Experience() {
         </motion.div>
 
         <div className="relative">
-          {/* Timeline line */}
           <div className={`
-            absolute left-[19px] top-0 bottom-0 w-px
-            ${isDeveloper ? 'bg-primary/30' : 'bg-border'}
-          `} />
+        absolute left-6 top-0 bottom-0 w-0.5
+        ${isDeveloper
+              ? 'bg-gradient-to-b from-primary via-accent to-primary/20'
+              : 'bg-gradient-to-b from-primary/50 to-border'
+            }
+      `} />
 
-          <div className="space-y-8">
-            {experiences.map((exp) => (
-              <motion.div
-                key={exp.company}
-                className="relative pl-12"
-                variants={itemVariantsX}
-              >
-                {/* Timeline dot */}
-                <div className={`
-                  absolute left-0 top-1 w-10 h-10 rounded-full flex items-center justify-center
-                  ${isDeveloper 
-                    ? 'bg-card border-2 border-primary' 
-                    : 'bg-secondary border-2 border-background'
-                  }
-                `}>
-                  <Briefcase className={`w-4 h-4 ${isDeveloper ? 'text-primary' : ''}`} />
-                </div>
+          <div className="space-y-12">
+            {experiences.map((exp, index) => {
+              const isCurrent = exp.endDate.toLowerCase() === 'present';
+              const duration = calculateDuration(exp.startDate, exp.endDate);
 
+              return (
                 <motion.div
-                  className={`
-                    p-6 rounded-lg
-                    ${isDeveloper 
-                      ? 'bg-card border border-primary/30 hover:border-primary/60 transition-colors' 
-                      : 'bg-card border border-border'
-                    }
-                  `}
-                  whileHover={isDeveloper ? { 
-                    boxShadow: '0 0 20px hsl(142 71% 45% / 0.2)'
-                  } : {}}
+                  key={exp.company}
+                  className="relative pl-16"
+                  variants={itemVariantsX}
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-                    <h3 className={`
-                      text-lg font-semibold
-                      ${isDeveloper ? 'text-primary' : ''}
-                    `}>
-                      {isDeveloper ? `this.company = "${exp.company}"` : exp.company}
-                    </h3>
-                    <span className={`
-                      text-sm
-                      ${isDeveloper ? 'font-mono text-accent' : 'text-muted-foreground'}
-                    `}>
-                      {isDeveloper ? `// ${exp.period}` : exp.period}
-                    </span>
+                  <div className={`
+                absolute left-0 top-1 w-12 h-12 rounded-full flex items-center justify-center
+                ${isDeveloper
+                      ? 'bg-card border-2 border-primary'
+                      : 'bg-background border-4 border-background shadow-lg'
+                    }
+                ${isCurrent && isDeveloper ? 'animate-pulse' : ''}
+              `}>
+                    {isDeveloper && isCurrent ? (
+                      <div className="w-3 h-3 bg-accent rounded-full animate-ping absolute" />
+                    ) : null}
+                    <Briefcase className={`w-5 h-5 ${isDeveloper ? 'text-primary' : 'text-muted-foreground'} relative z-10`} />
                   </div>
-                  
-                  <p className={`
-                    text-sm mb-2
-                    ${isDeveloper ? 'font-mono text-accent' : 'font-medium text-muted-foreground'}
-                  `}>
-                    {isDeveloper ? `role: "${exp.role}"` : exp.role}
-                  </p>
-                  
-                  <p className={`
-                    text-sm
-                    ${isDeveloper ? 'font-mono text-muted-foreground' : 'text-muted-foreground'}
-                  `}>
-                    {isDeveloper ? `// ${exp.description}` : exp.description}
-                  </p>
+
+                  <motion.div
+                    className={`
+                  p-6 rounded-lg
+                  ${isDeveloper
+                        ? 'bg-card border border-primary/30 hover:border-primary/60'
+                        : 'bg-card border border-border hover:shadow-xl'
+                      }
+                  transition-all
+                `}
+                    whileHover={{
+                      y: -4,
+                      ...(isDeveloper ? { boxShadow: '0 0 30px rgba(147, 51, 234, 0.2)' } : {})
+                    }}
+                  >
+                    <div className="flex items-start gap-4 mb-4">
+                      <CompanyLogo company={exp.company} isDeveloper={isDeveloper} />
+
+                      <div className="flex-1">
+                        <div className="flex flex-wrap items-center gap-2 mb-2">
+                          <h3 className={`
+                        text-lg font-semibold
+                        ${isDeveloper ? 'text-primary font-mono' : ''}
+                      `}>
+                            {isDeveloper ? `"${exp.company}"` : exp.company}
+                          </h3>
+                          {isCurrent && <ExperienceBadge type="current" isDeveloper={isDeveloper} />}
+                          {exp.link && (
+                            <a
+                              href={exp.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={`
+                            inline-flex items-center gap-1 text-xs transition-colors
+                            ${isDeveloper ? 'text-accent hover:text-primary' : 'text-muted-foreground hover:text-primary'}
+                          `}
+                            >
+                              <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+
+                        <p className={`
+                      text-sm mb-2
+                      ${isDeveloper ? 'font-mono text-accent' : 'font-medium text-muted-foreground'}
+                    `}>
+                          {isDeveloper ? `role: "${exp.role}"` : exp.role}
+                        </p>
+
+                        <div className="flex flex-wrap gap-2 text-xs">
+                          <span className={`
+                        ${isDeveloper ? 'font-mono text-muted-foreground' : 'text-muted-foreground'}
+                      `}>
+                            {isDeveloper ? `// ${exp.period}` : exp.period}
+                          </span>
+                          <ExperienceBadge type="duration" value={duration} isDeveloper={isDeveloper} />
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className={`
+                  text-sm mb-4
+                  ${isDeveloper ? 'font-mono text-muted-foreground' : 'text-muted-foreground'}
+                `}>
+                      {isDeveloper ? `/* ${exp.description} */` : exp.description}
+                    </p>
+
+                    {exp.techs && exp.techs.length > 0 && (
+                      <div className="flex flex-wrap gap-2 pt-4 border-t border-border/50">
+                        {isDeveloper && (
+                          <span className="font-mono text-xs text-muted-foreground mr-2">
+                            stack:
+                          </span>
+                        )}
+                        {exp.techs.map((tech) => (
+                          <span
+                            key={tech}
+                            className={`
+                          px-2 py-1 text-xs rounded-md
+                          ${isDeveloper
+                                ? 'bg-primary/10 text-primary border border-primary/30 font-mono'
+                                : 'bg-secondary text-foreground'
+                              }
+                        `}
+                          >
+                            {isDeveloper ? `"${tech}"` : tech}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
