@@ -370,3 +370,21 @@
 }
 
 /* END - Cursor Blink Animation */
+
+/* START - Projects Animation */
+
+@keyframes scan {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(128px);
+  }
+}
+
+.animate-scan {
+  animation: scan 2s linear infinite;
+}
+
+/* END - Projects Animation */
