@@ -5,6 +5,7 @@
 @tailwind utilities;
 
 @layer base {
+
   /* Professional Mode */
   :root {
     --background: 40 20% 98%;
@@ -41,7 +42,7 @@
     --neon-green: 142 71% 45%;
     --neon-purple: 270 95% 75%;
     --grid-color: 0 0% 90%;
-    
+
     --font-sans: 'Inter', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
 
@@ -106,19 +107,18 @@
 }
 
 @layer components {
+
   /* CRT Scanline Overlay for Developer Mode */
   .crt-overlay {
     pointer-events: none;
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      hsla(0, 0%, 0%, 0.03) 2px,
-      hsla(0, 0%, 0%, 0.03) 4px
-    );
+    background: repeating-linear-gradient(0deg,
+        transparent,
+        transparent 2px,
+        hsla(0, 0%, 0%, 0.03) 2px,
+        hsla(0, 0%, 0%, 0.03) 4px);
   }
 
   /* Animated Grid Background */
@@ -134,8 +134,15 @@
   }
 
   @keyframes grid-pulse {
-    0%, 100% { opacity: 0.3; }
-    50% { opacity: 0.6; }
+
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+
+    50% {
+      opacity: 0.6;
+    }
   }
 
   /* Glitch Effect */
@@ -144,26 +151,32 @@
       transform: translate(0);
       filter: hue-rotate(0deg);
     }
+
     10% {
       transform: translate(-5px, 2px);
       filter: hue-rotate(90deg);
     }
+
     20% {
       transform: translate(5px, -2px);
       filter: hue-rotate(180deg);
     }
+
     30% {
       transform: translate(-3px, 3px);
       filter: hue-rotate(270deg);
     }
+
     40% {
       transform: translate(3px, -3px);
       filter: hue-rotate(0deg);
     }
+
     50% {
       transform: translate(0);
       filter: hue-rotate(0deg);
     }
+
     100% {
       transform: translate(0);
       filter: hue-rotate(0deg);
@@ -176,64 +189,94 @@
 
   /* Screen Flash Transition */
   @keyframes screen-flash {
-    0% { opacity: 0; }
-    10% { opacity: 1; }
-    20% { opacity: 0; }
-    30% { opacity: 0.8; }
-    40% { opacity: 0; }
-    50% { opacity: 0.5; }
-    100% { opacity: 0; }
+    0% {
+      opacity: 0;
+    }
+
+    10% {
+      opacity: 1;
+    }
+
+    20% {
+      opacity: 0;
+    }
+
+    30% {
+      opacity: 0.8;
+    }
+
+    40% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+
+    100% {
+      opacity: 0;
+    }
   }
 
   .screen-flash {
     position: fixed;
     inset: 0;
     z-index: 10000;
-    background: linear-gradient(
-      45deg,
-      hsl(142 71% 45% / 0.3),
-      hsl(270 95% 75% / 0.3)
-    );
+    background: linear-gradient(45deg,
+        hsl(142 71% 45% / 0.3),
+        hsl(270 95% 75% / 0.3));
     animation: screen-flash 0.5s ease-out forwards;
     pointer-events: none;
   }
 
-  /* Terminal cursor blink */
+  /* START - Cursor Blink Animation */
   @keyframes cursor-blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
+
+    0%,
+    50% {
+      opacity: 1;
+    }
+
+    51%,
+    100% {
+      opacity: 0;
+    }
   }
 
   .cursor-blink {
     animation: cursor-blink 1s step-end infinite;
   }
 
-  /* Retro card glow */
   .retro-glow {
-    box-shadow: 
+    box-shadow:
       0 0 5px hsl(var(--primary)),
       0 0 10px hsl(var(--primary) / 0.5),
       0 0 20px hsl(var(--primary) / 0.3);
   }
 
-  /* Hover glitch for cards */
   @keyframes card-glitch {
-    0%, 100% {
+
+    0%,
+    100% {
       clip-path: inset(0 0 0 0);
       transform: translate(0);
     }
+
     20% {
       clip-path: inset(20% 0 60% 0);
       transform: translate(-2px, 2px);
     }
+
     40% {
       clip-path: inset(40% 0 40% 0);
       transform: translate(2px, -2px);
     }
+
     60% {
       clip-path: inset(60% 0 20% 0);
       transform: translate(-1px, 1px);
     }
+
     80% {
       clip-path: inset(80% 0 0% 0);
       transform: translate(1px, -1px);
@@ -250,3 +293,80 @@
     box-shadow: 0 0 10px hsl(var(--primary) / 0.5);
   }
 }
+
+@keyframes blink {
+
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.cursor-blink {
+  animation: blink 1s infinite;
+}
+
+/* Neon flickering effect */
+@keyframes neon-flicker {
+
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    text-shadow:
+      0 0 10px rgba(147, 51, 234, 0.8),
+      0 0 20px rgba(147, 51, 234, 0.6),
+      0 0 30px rgba(147, 51, 234, 0.4),
+      0 0 40px rgba(147, 51, 234, 0.3);
+    opacity: 1;
+  }
+
+  20%,
+  24%,
+  55% {
+    text-shadow:
+      0 0 5px rgba(147, 51, 234, 0.4),
+      0 0 10px rgba(147, 51, 234, 0.2);
+    opacity: 0.8;
+  }
+
+  22% {
+    text-shadow: none;
+    opacity: 0.6;
+  }
+}
+
+.neon-flicker {
+  animation: neon-flicker 5s infinite;
+}
+
+.retro-glow {
+  box-shadow:
+    0 0 10px rgba(var(--primary-rgb, 147, 51, 234), 0.5),
+    0 0 20px rgba(var(--primary-rgb, 147, 51, 234), 0.3),
+    inset 0 0 10px rgba(var(--primary-rgb, 147, 51, 234), 0.1);
+}
+
+.text-glow {
+  text-shadow:
+    0 0 10px rgba(var(--primary-rgb, 147, 51, 234), 0.8),
+    0 0 20px rgba(var(--primary-rgb, 147, 51, 234), 0.6),
+    0 0 30px rgba(var(--primary-rgb, 147, 51, 234), 0.4);
+}
+
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* END - Cursor Blink Animation */
