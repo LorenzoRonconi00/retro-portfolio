@@ -155,9 +155,9 @@ export function About() {
               </p>
               <p className={`${isDeveloper ? 'text-accent' : 'text-muted-foreground'}`}>
                 {isDeveloper ? 'institution: ' : ''}University of Perugia
-              </p>
+              </p>S
               <p className="text-muted-foreground mt-2 mb-4">
-                {isDeveloper ? 'period: "2021 - Ongoing"' : '2021 - Ongoing'}
+                {isDeveloper ? 'period: "2021 - 2023"' : '2021 - 2023'}
               </p>
 
               <div className="space-y-2">
