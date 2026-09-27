@@ -167,7 +167,7 @@ export function About() {
                   </span>
                   {!isDeveloper && (
                     <span className="px-2 py-1 text-xs bg-accent/20 text-accent rounded-full">
-                      In Progress
+                      Completed
                     </span>
                   )}
                 </div>
