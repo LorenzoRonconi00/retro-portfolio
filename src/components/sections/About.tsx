@@ -17,7 +17,7 @@ export function About() {
   const expectedEndYear = 2025;
   const yearsElapsed = currentYear - startYear;
   const totalYears = expectedEndYear - startYear;
-  const educationProgress = 90;
+  const educationProgress = 100;
 
   return (
     <section ref={ref} className="py-24 px-6" id="about">
