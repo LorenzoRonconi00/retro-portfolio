@@ -10,7 +10,7 @@ import { containerVariants, itemVariants } from '@/lib/animations';
 
 const contactInfo = [
   { icon: Mail, label: 'Email', value: 'lorenzoronconi60@gmail.com', href: 'mailto:lorenzoronconi60@gmail.com' },
-  { icon: Phone, label: 'Phone', value: '+39 3318389305', href: 'tel:+393318389305' },
+  { icon: Phone, label: 'Phone', value: '+39 331 8389305', href: 'tel:+393318389305' },
   { icon: MapPin, label: 'Location', value: 'Perugia, Italy', href: null },
 ];
 

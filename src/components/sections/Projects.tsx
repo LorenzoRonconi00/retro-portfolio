@@ -167,6 +167,25 @@ export function Projects() {
                         >
                           <Github className="w-4 h-4" />
                         </motion.a>
+                        {project.demoUrl && (
+                          <motion.a
+                            href={project.demoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${project.title} live demo`}
+                            className={`
+                            p-2 rounded-md transition-colors
+                            ${isDeveloper
+                                ? 'hover:bg-primary/20 text-muted-foreground hover:text-primary'
+                                : 'hover:bg-secondary text-muted-foreground'
+                              }
+                          `}
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </motion.a>
+                        )}
                       </div>
                     </div>
 

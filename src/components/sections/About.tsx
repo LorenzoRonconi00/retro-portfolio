@@ -4,7 +4,6 @@ import { useRef } from 'react';
 import { GraduationCap, User } from 'lucide-react';
 import { containerVariants, itemVariants } from '@/lib/animations';
 import { StatsCard } from '../ui/statscard';
-import { ProgressBar } from '../ui/progressbar';
 import bioAvatar from '@/assets/bio_avatar.png';
 
 export function About() {
@@ -12,7 +11,6 @@ export function About() {
   const isDeveloper = mode === 'developer';
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const educationProgress = 100;
 
   return (
     <section ref={ref} className="py-24 px-6" id="about">
@@ -149,23 +147,10 @@ export function About() {
               <p className={`${isDeveloper ? 'text-accent' : 'text-muted-foreground'}`}>
                 {isDeveloper ? 'institution: ' : ''}University of Perugia
               </p>
-              <p className="text-muted-foreground mt-2 mb-4">
+              <p className="text-muted-foreground mt-2">
                 {isDeveloper ? 'period: "2020 - 2023"' : '2020 - 2023'}
               </p>
 
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
-                  <span className={isDeveloper ? 'text-muted-foreground' : 'text-muted-foreground'}>
-                    {isDeveloper ? 'progress:' : 'Progress'}
-                  </span>
-                  {!isDeveloper && (
-                    <span className="px-2 py-1 text-xs bg-accent/20 text-accent rounded-full">
-                      Completed
-                    </span>
-                  )}
-                </div>
-                <ProgressBar progress={educationProgress} isDeveloper={isDeveloper} />
-              </div>
             </div>
           </motion.div>
         </div>
