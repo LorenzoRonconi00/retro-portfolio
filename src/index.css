@@ -388,3 +388,7 @@
 }
 
 /* END - Projects Animation */
+
+html {
+  scroll-behavior: smooth;
+}

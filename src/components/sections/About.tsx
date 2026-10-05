@@ -12,11 +12,6 @@ export function About() {
   const isDeveloper = mode === 'developer';
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const currentYear = new Date().getFullYear();
-  const startYear = 2021;
-  const expectedEndYear = 2025;
-  const yearsElapsed = currentYear - startYear;
-  const totalYears = expectedEndYear - startYear;
   const educationProgress = 100;
 
   return (
@@ -93,13 +88,11 @@ export function About() {
                 <span>
                   <span className="text-primary">return</span>{' '}
                   <span className="text-accent">"</span>
-                  Full-stack developer with experience in designing and developing software solutions.
-                  Highly motivated, continuously learning, and driven by a strong passion for programming—especially
-                  front-end development and game development.
+                  Full-Stack Software Engineer with 3+ years of experience building web applications with Angular, React, TypeScript and Java/Spring Boot on PostgreSQL. Focused on maintainable, scalable features and clean architecture.
                   <span className="text-accent">"</span>;
                 </span>
               ) : (
-                'Full-stack developer with experience in designing and developing software solutions. Highly motivated, continuously learning, and driven by a strong passion for programming—especially front-end development and game development.'
+                'Full-Stack Software Engineer with 3+ years of experience building web applications with Angular, React, TypeScript and Java/Spring Boot on PostgreSQL. Focused on maintainable, scalable features and clean architecture.'
               )}
             </p>
 
@@ -110,14 +103,14 @@ export function About() {
               {isDeveloper ? (
                 <div className="space-y-2">
                   <StatsCard label="experience" value="'3+ years'" isDeveloper={true} />
-                  <StatsCard label="projects" value="10" isDeveloper={true} />
-                  <StatsCard label="technologies" value="15" isDeveloper={true} />
+                  <StatsCard label="projects" value="10+" isDeveloper={true} />
+                  <StatsCard label="technologies" value="20+" isDeveloper={true} />
                 </div>
               ) : (
                 <div className="flex justify-around gap-4">
                   <StatsCard label="Years Experience" value="3+" isDeveloper={false} />
                   <StatsCard label="Projects" value="10+" isDeveloper={false} />
-                  <StatsCard label="Technologies" value="15+" isDeveloper={false} />
+                  <StatsCard label="Technologies" value="20+" isDeveloper={false} />
                 </div>
               )}
             </div>
@@ -155,9 +148,9 @@ export function About() {
               </p>
               <p className={`${isDeveloper ? 'text-accent' : 'text-muted-foreground'}`}>
                 {isDeveloper ? 'institution: ' : ''}University of Perugia
-              </p>S
+              </p>
               <p className="text-muted-foreground mt-2 mb-4">
-                {isDeveloper ? 'period: "2021 - 2023"' : '2021 - 2023'}
+                {isDeveloper ? 'period: "2020 - 2023"' : '2020 - 2023'}
               </p>
 
               <div className="space-y-2">

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { containerVariants, itemVariants } from '@/lib/animations';
 import { useTypingEffect } from '@/hooks/useTypingEffect';
 import { ScrollIndicator } from '../ui/scroll-indicator';
+import { useToast } from '@/hooks/use-toast';
 import meProImage from '@/assets/me_pro.png';
 import meDevImage from '@/assets/me_dev.png';
 
@@ -20,11 +21,12 @@ export function Hero() {
   const { mode } = useTheme();
   const isDeveloper = mode === 'developer';
   const { displayedText, isComplete } = useTypingEffect(taglineText, 30);
+  const { toast } = useToast();
 
   const handleEmailClick = (e: React.MouseEvent) => {
     e.preventDefault();
     navigator.clipboard.writeText('lorenzoronconi60@gmail.com');
-    alert('Email copiata negli appunti!');
+    toast({ title: 'Email copied to clipboard' });
   };
 
   return (
@@ -132,9 +134,9 @@ export function Hero() {
           variants={itemVariants}
         >
           {isDeveloper ? (
-            '// Software Engineer | Front-end & Web Applications'
+            '// Full-Stack Software Engineer | Angular, Spring Boot & Web Applications'
           ) : (
-            'Software Engineer | Front-end & Web Applications'
+            'Full-Stack Software Engineer | Angular, Spring Boot & Web Applications'
           )}
         </motion.p>
 

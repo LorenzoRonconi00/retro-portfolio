@@ -1,5 +1,6 @@
 import { ThemeProvider } from '../contexts/ThemeContext';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { Navbar } from '@/components/Navbar';
 import { GridBackground } from '@/components/GridBackground';
 import { Hero } from '@/components/sections/Hero';
 import { About } from '@/components/sections/About';
@@ -13,6 +14,7 @@ const Index = () => {
     <ThemeProvider>
       <GridBackground />
       <ThemeToggle />
+      <Navbar />
       <main className="relative">
         <Hero />
         <About />

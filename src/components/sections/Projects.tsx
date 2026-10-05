@@ -1,45 +1,46 @@
 import { motion, useInView } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useRef, useState } from 'react';
-import { ExternalLink, Github, Plane, Home, Users } from 'lucide-react';
+import { ExternalLink, Github, Plane, Wallet, Mountain } from 'lucide-react';
 import { containerVariants, itemVariants } from '@/lib/animations';
 import { ProjectImage } from '../ui/project-image';
 import { ProjectStatusBadge } from '../ui/project-status-badge';
+import fintechImg from '@/assets/fintech.png';
+import terrainImg from '@/assets/terrain-forge.png';
 import travelImg from '@/assets/travel.png';
-import roomlyImg from '@/assets/roomly.png';
-import itsImg from '@/assets/its.png';
 import { ArrowRight } from 'lucide-react';
 
 const projects = [
   {
-    title: 'ITS Platform',
-    devTitle: 'its_platform',
-    description: 'Web platform (Angular + Parse). Management for student groups and procedural website generation.',
-    icon: Users,
-    tags: ['Angular', 'Parse', 'TypeScript'],
-    githubUrl: 'https://github.com/LorenzoRonconi00?tab=repositories',
-    image: itsImg,
+    title: 'FINTECH',
+    devTitle: 'fintech',
+    description: 'Personal finance web app (Next.js, Supabase). Custom budget periods, recurring templates and real vs. projected balance.',
+    icon: Wallet,
+    tags: ['Next.js', 'TypeScript', 'Supabase', 'Tailwind'],
+    githubUrl: 'https://github.com/LorenzoRonconi00/FINTECH',
+    demoUrl: 'https://www.fintechprolab.com/',
+    image: fintechImg,
+    status: 'completed' as const,
+  },
+  {
+    title: 'Terrain Forge',
+    devTitle: 'terrain_forge',
+    description: 'Offline desktop tool (Electron, Three.js). Procedural terrain and dungeon generation with live 3D preview and export to PNG, OBJ and TMX.',
+    icon: Mountain,
+    tags: ['Electron', 'TypeScript', 'Three.js', 'Vitest'],
+    githubUrl: 'https://github.com/LorenzoRonconi00/terrain_forge',
+    image: terrainImg,
     status: 'completed' as const,
   },
   {
     title: 'Travel Planner',
     devTitle: 'travel_planner',
-    description: 'Desktop app (Electron, AI, Supabase). Generates travel itineraries with PDF export and Gemini 2.0 integration.',
+    description: 'Desktop app (Electron, React, Supabase). Generates travel itineraries with PDF export and Gemini 2.0 integration.',
     icon: Plane,
-    tags: ['Electron', 'AI', 'Supabase', 'Gemini 2.0'],
+    tags: ['Electron', 'React', 'Supabase', 'Gemini 2.0'],
     githubUrl: 'https://github.com/LorenzoRonconi00/TravelPlanner',
     image: travelImg,
     status: 'completed' as const,
-  },
-  {
-    title: 'Roomly',
-    devTitle: 'roomly',
-    description: 'Mobile app (Flutter, Dart). Household management, chores, and expense tracking.',
-    icon: Home,
-    tags: ['Flutter', 'Dart', 'Mobile'],
-    githubUrl: 'https://github.com/LorenzoRonconi00?tab=repositories',
-    image: roomlyImg,
-    status: 'ongoing' as const,
   },
 ];
 
